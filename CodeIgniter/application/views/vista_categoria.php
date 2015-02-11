@@ -1,12 +1,12 @@
 <div class="row">
-<p>DESTACADOS</p>
+<p>CATEGORIA</p>
 <?php 
-	foreach ($rs_articulos as $fila) :
+	foreach ($rs_prod as $fila) :
 	
-	//Comprueba que el producto no está marcado como oculto.
 	if($fila['oculto']==0) :
 ?>
-	<div class="col-sm-6 col-md-4">
+
+	<div class="col-sm-4 col-md-4">
 		<div class="thumbnail">
 			<img src="<?= base_url($fila['imagen']);?>">
 			<div class="caption">
