@@ -1,8 +1,12 @@
 <div class="row">
-<p>CATEGORIA</p>
+<div class="col-sm-12" style="text-align: left;">
+	<h2><span class="label label-danger">Categoría</span></h2><br>
+</div>
 <?php 
+foreach ($productos as $rs_prod) :
 	foreach ($rs_prod as $fila) :
 	
+	//Comprueba que el producto no está marcado como oculto.
 	if($fila['oculto']==0) :
 ?>
 
@@ -17,5 +21,11 @@
 		</div>
 	</div>
 
-<?php endif; endforeach;?>
+<?php endif; endforeach; endforeach;?>
+</div>
+
+<div class="col-sm-offset-5">
+<div class="pagination">
+	<?= $paginacion?>
+</div>
 </div>

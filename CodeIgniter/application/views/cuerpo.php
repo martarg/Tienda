@@ -1,7 +1,10 @@
 <div class="row">
-<p>DESTACADOS</p>
+<div class="col-sm-12" style="text-align: left;">
+	<h2><span class="label label-warning">Destacados</span></h2><br>
+</div>
 <?php 
-	foreach ($rs_articulos as $fila) :
+	foreach ($productos as $rs_articulos) :
+		foreach ($rs_articulos as $fila) :
 	
 	//Comprueba que el producto no está marcado como oculto.
 	if($fila['oculto']==0) :
@@ -17,5 +20,11 @@
 		</div>
 	</div>
 
-<?php endif; endforeach;?>
+<?php endif; endforeach; endforeach;?>
 </div>
+<div class="col-sm-offset-5">
+<div class="pagination">
+	<?= $paginador?>
+</div>
+</div>
+

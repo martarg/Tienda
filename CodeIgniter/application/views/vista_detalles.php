@@ -1,4 +1,4 @@
-<div class="panel panel-success">
+<div class="panel panel-info">
 	<div class="panel-heading">
 		<h3 class="panel-title"><?=$nombre?></h3>
 	</div>

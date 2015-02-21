@@ -18,6 +18,10 @@
 	<div class="col-sm-9">
 		<?= $cuerpo?>
 	</div>
+	
+	<div class="col-sm-12" style="text-align: right; /*background-color: gray;*/">
+		<footer><?= $pie?></footer>
+	</div>
 </div>
 </body>
 </html>

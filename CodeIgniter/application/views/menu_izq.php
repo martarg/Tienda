@@ -6,7 +6,7 @@
 	?>
 	<li class="list-group-item">
 		<span class="badge"></span> <!-- HACER CONTADOR DE PRODUCTOS -->
-		<a href="<?= site_url('/tienda/muestraCategoria/'.$valor['id']); ?>"><?=$valor['nombre'];?></a>
+		<a href="<?= site_url('/tienda/muestraCategoria/'.$valor['id'])?>"><?=$valor['nombre'];?></a>
 	</li>
 	<?php endforeach;?>
 </ul>
