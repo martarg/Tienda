@@ -1,4 +1,4 @@
-<?php
+<?php	if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 session_start();
 
 class Usuario extends CI_Controller
@@ -191,10 +191,130 @@ class Usuario extends CI_Controller
 		
 		$this->session->unset_userdata('valido', $sess_arr);
 		
+		//$this->cart->destroy();
 		$data['logout'] = 'Sesión cerrada.';
 		
-		redirect('tienda/destacados');
-		//$this->plantilla($this->load->view('login', $data, TRUE));
+		$this->plantilla(
+			$this->load->view('login', $data, TRUE));
+		//redirect('usuario/login');
 	}
 	
+	/**
+	 * Devuelve los datos del usuario
+	 * @return multitype:NULL
+	 */
+	function datosUsuario()
+	{
+		$result = $this->Usuario_model->informacionUsuario($this->session->userdata('valido'));
+
+		if ($result != false)
+		{
+			$data = array (
+					'id' => $result[0]->id,
+					'nombre' => $result [0]->nombre,
+					'apellidos' => $result [0]->apellidos,
+					'dni' => $result [0]->dni,
+					'direccion' => $result [0]->direccion,
+					'cp' => $result [0]->cp,
+					'provincia_id' => $result [0]->provincia_id,
+					'provincia' => $this->Usuario_model->NombreProvincia($result [0]->provincia_id),
+					'usuario' => $result [0]->usuario,
+					'email' => $result [0]->email,
+					'password' => $result [0]->password
+			);
+		}
+		
+		return $data;
+	}
+	
+	
+	/**
+	 * Carga la vista con el perfil de un usuario
+	 */
+	function perfil()
+	{
+		$data = $this->datosUsuario();
+		
+		$this->plantilla($this->load->view('perfil', $data, TRUE));
+	}
+	
+	/**
+	 * Modifica los datos de un usuario
+	 */
+	function modificarPerfil()
+	{
+		$provincias = $this->Usuario_model->ListaProvincias();
+		
+		if ($_POST)
+		{
+			//siguientes envíos
+			$data['nombre'] = $this->input->post('nombre');
+			$data['apellidos'] = $this->input->post('apellidos');
+			$data['dni'] = $this->input->post('dni');
+			$data['direccion'] = $this->input->post('direccion');
+			$data['cp'] = $this->input->post('cp');
+			$data['provincia_id'] = $this->input->post('selprovincias');
+			$data['usuario'] = $this->input->post('usuario');
+			$data['email'] = $this->input->post('email');		
+		}
+		else 
+		{
+			//Primer vez que accedemos cogemos datos de la bd
+			$data = $this->datosUsuario();
+		}
+		$data['provincias'] = $provincias;
+		
+		//Carga la librería para validar formulario.
+		$this->load->library('form_validation');
+		
+		//Configurar las reglas de validación
+		$this->form_validation->set_rules('nombre', 'nombre', 'trim|required');
+		$this->form_validation->set_rules('apellidos', 'apellidos', 'trim|required');
+		$this->form_validation->set_rules('dni', 'dni', 'trim|required|callback_validarDNI');
+		$this->form_validation->set_rules('direccion', 'direccion', 'trim|required');
+		$this->form_validation->set_rules('cp', 'código postal', 'trim|required|numeric|exact_length[5]');
+		$this->form_validation->set_rules('selprovincias', 'provincia', 'required');
+		$this->form_validation->set_rules('usuario', 'usuario', 'trim|required|min_length[3]|max_length[25]|xss_clean');
+		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+		
+		//Dar estilo al error.
+		$this->form_validation->set_error_delimiters('<div class="alert-sm alert-danger">', '</div>');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->plantilla($this->load->view('modificar', $data, TRUE));
+		}
+		else 
+		{		
+			$datosSesion = $this->datosUsuario();
+			$id = $datosSesion['id'];
+			$datos['nombre'] = $this->input->post('nombre');
+			$datos['apellidos'] = $this->input->post('apellidos');
+			$datos['dni'] = $this->input->post('dni');
+			$datos['direccion'] = $this->input->post('direccion');
+			$datos['cp'] = $this->input->post('cp');
+			$datos['provincia_id'] = $this->input->post('selprovincias');
+			$datos['usuario'] = $this->input->post('usuario');
+			$datos['email'] = $this->input->post('email');
+			
+			
+			$this->session->set_userdata('valido', $datos);
+			$this->Usuario_model->modificarUsuario($id, $datos);
+				
+			$this->plantilla(
+					$this->load->view('exito', '', TRUE));
+		}
+	}
+	
+	/**
+	 * Da de baja un usuario
+	 */
+	function borrarUsuario()
+	{
+		$data = $this->datosUsuario();
+		$id = $data['id'];
+		$this->Usuario_model->borrarUsuario($id);
+		
+		$this->logout();
+	}
 }

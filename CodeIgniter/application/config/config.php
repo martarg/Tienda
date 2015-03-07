@@ -1,4 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+define('MODO_LOCAL', TRUE);
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +15,14 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://127.0.0.1/Practica2/CodeIgniter';
-
+if(MODO_LOCAL)
+{
+	$config['base_url']	= 'http://127.0.0.1/Practica2/CodeIgniter';
+}
+else
+{
+	$config['base_url'] = 'http://iessansebastian.com/alumnos/2daw1415/marta/Practica2/CodeIgniter';
+} 
 /*
 |--------------------------------------------------------------------------
 | Index File

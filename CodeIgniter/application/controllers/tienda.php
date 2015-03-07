@@ -63,6 +63,14 @@ class Tienda extends CI_Controller
 		}
 		else
 		{
+			if(isset($arrayProductos['descuento']) && $arrayProductos['descuento'] != 0)
+			{
+				$desc = $arrayProductos['descuento']*$arrayProductos['precio']/100;
+				$precioDesc = round(($arrayProductos['precio'] - $desc)*100)/100;
+								
+				$arrayProductos['preciofinal'] = $precioDesc;
+			}
+			
 			$this->showPlantilla(
 					$this->load->view('vista_detalles', $arrayProductos, TRUE));
 		}
@@ -76,7 +84,7 @@ class Tienda extends CI_Controller
 	{
 		//Carga la biblioteca paginación
 		$this->load->library('pagination');
-		$limit = 2;
+		$limit = 3;
 		
 		//Obtenemos el total de productos por categoría
 		$totalProd = $this->Producto_model->totalProdCategoria($id);
@@ -123,7 +131,7 @@ class Tienda extends CI_Controller
 	{	
 		//Carga la biblioteca paginación
 		$this->load->library('pagination');
-		$limit = 2;
+		$limit = 3;
 		
 		$totalProd = $this->Producto_model->totalDestacados();
 		

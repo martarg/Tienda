@@ -5,18 +5,16 @@ $atributos = array(
 );
 echo form_open('usuario/login', $atributos);
 
-//Error de usuario no válido
-echo "<div class='alert-sm alert-danger'>";
-	if (isset($error_message)) {
-		echo $error_message;
-	}
-	
-	if (isset($logout))
-	{
-		echo $logout;
-	}
-echo "</div><br>";
-?>
+if (isset($error_message)) { ?>
+	<div class="alert alert-danger" role="alert"><?= $error_message; ?></div>
+<?php }
+if (isset($logout)) { ?>
+	<div class="alert alert-warning" role="alert"><?= $logout; ?></div>
+<?php }
+$enviado = $this->session->flashdata('envio');
+if ($enviado) { ?>
+		<div class="alert alert-success" role="alert"><?= $enviado; ?></div>
+<?php } ?>
 
 <div class="form-group">
 	<label for="usuario" class="col-sm-2 control-label">Usuario</label>
@@ -34,7 +32,7 @@ echo "</div><br>";
 	</div>
 </div>
 
-<div class="form-group">
+<!-- <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
 		<div class="checkbox">
     		<label>
@@ -42,13 +40,20 @@ echo "</div><br>";
     		</label>
     	</div>
 	</div>
+</div> -->
+
+<div class="form-group">
+	<div class="col-sm-offset-2 col-sm-10">
+		<p>He olvidado mi contraseña. <a href="<?= site_url('mail/recuperarPassw')?>">Recuperar</a></p>
+	</div>
 </div>
 
 <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
-		¿Aún no estás registrado? <a href="<?= site_url('usuario/registro')?>">Registrate aquí</a>
+		<p>¿Aún no estás registrado? <a href="<?= site_url('usuario/registro')?>">Registrate aquí</a></p>
+	</div>
 </div>
-</div>
+
 <div class="form-group">
 	<div class="col-sm-offset-3">
 		<button type="submit" class="btn btn-primary">Entrar</button>

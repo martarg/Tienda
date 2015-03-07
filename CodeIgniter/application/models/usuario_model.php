@@ -27,6 +27,20 @@ class Usuario_model extends CI_Model
 		}
 	}
 	
+	function NombreProvincia($idprov)
+	{
+		$sql = "select nombre from provincias where id=$idprov";
+		$rs = $this->db->query($sql);
+		if ($rs) {
+			$reg=$rs->row();
+			return $reg->nombre; 
+		}
+		else 
+		{
+			return "**** ERROR ***";
+		}
+	}
+	
 	function insertarUsuario($campos)
 	{
 		//sentencia sql que nos inserta en la tabla usuario
@@ -43,7 +57,7 @@ class Usuario_model extends CI_Model
 	
 	function loginValido($usuario, $password)
 	{
-		$sql = "select * from usuario where usuario = '".$usuario."' AND password = '".$password."'";
+		$sql = "select * from usuario where usuario = '".$usuario."' AND password = '".$password."' AND borrado != 1";
 		
 		$query = $this->db->query($sql);
 
@@ -75,5 +89,30 @@ class Usuario_model extends CI_Model
 		{
 			return false;
 		}
+	}
+	
+	
+	function modificarUsuario($id, $datos)
+	{
+		$campos = '';
+		
+		foreach ($datos as $clave => $valor)
+		{
+			if($campos!='')
+			{
+				$campos.=', ';
+			}
+			$campos.= $clave.'="'.$valor.'"';
+		}
+		
+		$sql = "update usuario set ".$campos." where id=".$id;
+		$this->db->query($sql);
+		
+	} 
+	
+	function borrarUsuario($id)
+	{
+		$sql = "UPDATE usuario SET borrado = 1 WHERE id =".$id;
+		$this->db->query($sql);
 	}
 }

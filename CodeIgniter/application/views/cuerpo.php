@@ -1,6 +1,25 @@
 <div class="row">
 <div class="col-sm-12" style="text-align: left;">
-	<h2><span class="label label-warning">Destacados</span></h2><br>
+<?php
+	//mostramos el mensaje de las sesiones flashdata.
+	$agregado = $this->session->flashdata('agregado');
+	$destruido = $this->session->flashdata('destruido');
+	$productoEliminado = $this->session->flashdata('productoEliminado');
+
+	if ($agregado) { ?>
+		<div class="alert-sm alert-success" role="alert"><?= $agregado ?></div>
+	<?php }
+	elseif($destruido) { ?>
+		<div class="alert-sm alert-success" role="alert"><?= $destruido ?></div>
+	<?php }
+	elseif($productoEliminado) { ?>
+		<div class="alert-sm alert-success" role="alert"><?= $productoEliminado ?></div>>
+	<?php } ?>
+
+	<h2><span class="label label-warning">
+			<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+		 Destacados</span>
+	</h2><br>
 </div>
 <?php 
 	foreach ($productos as $rs_articulos) :
