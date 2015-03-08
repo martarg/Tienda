@@ -8,7 +8,8 @@ echo form_open('usuario/login', $atributos);
 if (isset($error_message)) { ?>
 	<div class="alert alert-danger" role="alert"><?= $error_message; ?></div>
 <?php }
-if (isset($logout)) { ?>
+$logout = $this->session->flashdata('logout');
+if ($logout) { ?>
 	<div class="alert alert-warning" role="alert"><?= $logout; ?></div>
 <?php }
 $enviado = $this->session->flashdata('envio');

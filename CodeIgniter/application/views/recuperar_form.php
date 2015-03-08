@@ -3,6 +3,9 @@
 $atributos = array(
 		'class' => 'form-horizontal'
 );
+if (isset($noExiste)) { ?>
+	<div class="alert alert-danger" role="alert"><?= $noExiste; ?></div>
+<?php }
 echo form_open('mail/recuperarPassw', $atributos);
 ?>
 

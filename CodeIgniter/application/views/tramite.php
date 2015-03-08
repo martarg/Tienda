@@ -1,5 +1,5 @@
-<div class="col-xs-10">
-<h3>Su carrito de la compra</h3>
+<div class="col-xs-8">
+<h3>Trámite del pedido</h3>
 <?php
 //si el carrito contiene productos los mostramos
 if ($carrito = $this->cart->contents()) 
@@ -7,7 +7,7 @@ if ($carrito = $this->cart->contents())
 	<br>
     <table class="table table-striped" style="border-collapse: separate; width:100%;">
         <tr>
-        	<th>Nombre</th>
+        	<th>Producto</th>
             <th>Precio</th>
             <th>Cantidad</th>
 		</tr>
@@ -22,20 +22,24 @@ if ($carrito = $this->cart->contents())
 				?>
 				<td><?= $item['price'] ?></td>
 				<td><?= $item['qty'] ?></td>
-				<!--creamos el enlace para eliminar el producto pulsado pasando el rowid del producto-->
-				<td id="eliminar"><?= anchor('/carrito/eliminaProducto/'.$item['rowid'], 'Eliminar') ?></td>
 			</tr><?php
 		}?>
 		<tr id="total">
 			<td><strong>Total:</strong></td>
 			<!--mostramos el total del carrito con $this->cart->total()-->
-			<td colspan="2"><?= $this->cart->total()?> €</td>
-			<!--creamos un enlace para eliminar el carrito-->
-			<td id="eliminarCarrito"><?= anchor('/carrito/eliminaCarrito', 'Vaciar carrito')?></td>
+			<td colspan="2" style="text-align: right;"><strong><?= $this->cart->total()?> €</strong></td>
+		</tr>
+		
+		<tr>
+			<td>Coste del envío:</td>
+			<td colspan="2">3,02 €</td>
 		</tr>
 		<tr>
-			<td><a href="tienda" class="btn btn-primary" role="button">Continuar comprando</a>
-			<td><a href="pedido/tramitar" class="btn btn-warning" role="button">Tramitar pedido</a>
+			<td><strong>Total del pedido:</strong></td>
+			<td colspan="2" style="color: red; text-align: right;"><strong><?= $this->cart->total()+3.02?> €</strong></td>
+		</tr>
+		<tr>
+			<td colspan="3" style="text-align: center;"><a href="<?= site_url('/pedido/crearPedido')?>" class="btn btn-success" role="button">Realizar compra</a>
 		</tr>
 	</table>
 <?php }

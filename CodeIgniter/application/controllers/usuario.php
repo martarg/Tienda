@@ -62,8 +62,8 @@ class Usuario extends CI_Controller
 		$this->form_validation->set_rules('direccion', 'direccion', 'trim|required');
 		$this->form_validation->set_rules('cp', 'código postal', 'trim|required|numeric|exact_length[5]');
 		$this->form_validation->set_rules('selprovincias', 'provincia', 'required');
-		$this->form_validation->set_rules('usuario', 'usuario', 'trim|required|min_length[3]|max_length[25]|xss_clean');
-		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+		$this->form_validation->set_rules('usuario', 'usuario', 'trim|required|min_length[3]|max_length[25]|xss_clean|is_unique[usuario.usuario]');
+		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email|is_unique[usuario.email]');
 		$this->form_validation->set_rules('password', 'contraseña', 'trim|required|matches[pConfirm]|md5');
 		$this->form_validation->set_rules('pConfirm', 'confirma contraseña', 'trim|required');
 		
@@ -165,7 +165,15 @@ class Usuario extends CI_Controller
 					);
 					
 					//$this->plantilla($this->load->view('dentro', $data, TRUE));
-					redirect('tienda/destacados');
+					if($_SERVER['HTTP_REFERER']==site_url('usuario/login'))
+					{
+						redirect('tienda/destacados');
+					}
+					else 
+					{
+						header('Location: '.$_SERVER['HTTP_REFERER']);
+					}
+					
 				}
 			}
 			else
@@ -192,11 +200,9 @@ class Usuario extends CI_Controller
 		$this->session->unset_userdata('valido', $sess_arr);
 		
 		//$this->cart->destroy();
-		$data['logout'] = 'Sesión cerrada.';
 		
-		$this->plantilla(
-			$this->load->view('login', $data, TRUE));
-		//redirect('usuario/login');
+		$this->session->set_flashdata('logout', 'Sesión cerrada.');
+		redirect('usuario/login');
 	}
 	
 	/**

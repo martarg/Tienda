@@ -58,40 +58,29 @@ class Mail extends CI_Controller
 		}
 		else
 		{
-			
-			//TODO: COMPROBAR QUE EL EMAIL EXISTE.
-			
 			$email = $this->input->post('email');
-				
-			$this->load->library('email');
-				
-			// Por defecto
-			/*echo "<h1>\n--- POR DEFECTO ---\n</h1>";
+			
+			if($this->Mail_model->existeEmail($email))
+			{
+				$this->load->library('email');
+		
+				// Utilizando sendmail
+				$config['protocol'] = 'smtp';
+				$config['smtp_host'] = 'mail.iessansebastian.com';
+				$config['smtp_user'] = 'aula4@iessansebastian.com';
+				$config['smtp_pass'] = 'daw2alumno';
+					
+				$this->email->initialize($config);
 				$this->EnviaCorreo($email);
+			}
+			else 
+			{
+				$data['noExiste'] = 'No existe ningún usuario con ese email.';
 				
-			// Utilizando sendmail
-			$config['protocol'] = 'sendmail';
-			$config['mailpath'] = '/usr/sbin/sendmail';
-			$config['charset'] = 'utf-8';
-			$config['wordwrap'] = TRUE;
-				
-			$this->email->initialize($config);
-				
-			/*echo "<h1>\n--- CON SENDMAIL ---\n</h1>";
-			$this->EnviaCorreo();
-			*/
-			// Utilizando sendmail
-			$config['protocol'] = 'smtp';
-			$config['smtp_host'] = 'mail.iessansebastian.com';
-			$config['smtp_user'] = 'aula4@iessansebastian.com';
-			$config['smtp_pass'] = 'daw2alumno';
-				
-			$this->email->initialize($config);
-				
-			echo "<h1>\n--- CON SMTP y cuenta en servidor externo ---\n</h1>";
-			$this->EnviaCorreo($email);
+				$this->plantilla(
+						$this->load->view('recuperar_form', $data, TRUE));
+			}
 		}
-	
 	}
 	
 	private function EnviaCorreo($email)
