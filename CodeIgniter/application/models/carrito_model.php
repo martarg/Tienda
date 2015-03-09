@@ -7,6 +7,11 @@ class Carrito_model extends CI_Model
 		$this->load->database();
 	}
 	
+	/**
+	 * Agrega un producto
+	 * @param unknown $id
+	 * @return unknown
+	 */
 	function agregarProd($id)
 	{
 		$this->db->from('producto');

@@ -7,11 +7,6 @@ class Mail extends CI_Controller
 		$this->load->model('Mail_model');
 	}
 	
-	function index()
-	{
-		
-	}
-	
 	/**
 	 * Carga la plantilla html (encabezado, menu, cuerpo y pie).
 	 * @param unknown $cuerpo
@@ -41,6 +36,9 @@ class Mail extends CI_Controller
 		));
 	}
 	
+	/**
+	 * Cambia contraseña y envía por correo.
+	 */
 	function recuperarPassw()
 	{
 		//Carga la librería para validar formulario.
@@ -83,6 +81,10 @@ class Mail extends CI_Controller
 		}
 	}
 	
+	/**
+	 * Envía el email con la contraseña
+	 * @param unknown $email
+	 */
 	private function EnviaCorreo($email)
 	{
 		$clave = $this->generaPassword();

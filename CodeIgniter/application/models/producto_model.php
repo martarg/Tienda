@@ -19,7 +19,7 @@ class Producto_model extends CI_Model
 	}
 	
 	/**
-	 * 
+	 * Cuenta todos los productos destacados
 	 * @return unknown
 	 */
 	function totalDestacados()
@@ -36,7 +36,7 @@ class Producto_model extends CI_Model
 	 */
 	function ListaCategorias()
 	{
-		$sql = "select * from categoria order by nombre";
+		$sql = "SELECT * FROM categoria ORDER BY nombre";
 		$rs = $this->db->query($sql);
 		return $rs->result_array();
 	}
@@ -56,7 +56,7 @@ class Producto_model extends CI_Model
 	
 	
 	/**
-	 * 
+	 * Devuelve el resultado de productos por categoría
 	 * @param unknown $id
 	 * @return unknown
 	 */

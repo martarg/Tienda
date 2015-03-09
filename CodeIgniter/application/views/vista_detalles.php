@@ -24,26 +24,25 @@
 					<strong>En stock: <?=$stock ?></strong>
 				</p>
 				</blockquote>
-				
-
+			
+				<?php 
+				if (isset($stock) && $stock > 0) : ?>
 				<p><label>Cantidad </label>
-					<?php 
-					if (isset($stock) && $stock != 0)
+					<?php $datos = array();
+					for($i=1; $i<=$stock; $i++)
 					{
-						$datos = array();
-						for($i=1; $i<=$stock; $i++)
-						{
-							$datos[$i]=$i;
-						}
-						echo form_dropdown('cantidad', $datos);
-					}?>
-				</p>
-                 <?= form_hidden('id', $id); ?>
-				<button type="submit" class="btn btn-success">
-					<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-					Añadir al carrito
-				</button>	
+						$datos[$i]=$i;
+					}
+					echo form_dropdown('cantidad', $datos);?>
+					</p>
+                 
+					<button type="submit" class="btn btn-success">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+						Añadir al carrito
+					</button>
+				<?php endif;?>	
 				
+				<?= form_hidden('id', $id); ?>
 			</div>
 			<br>
 			<br>

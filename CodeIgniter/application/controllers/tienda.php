@@ -1,4 +1,6 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+session_start();
+
 class Tienda extends CI_Controller
 {	
 	function __construct()
@@ -84,7 +86,7 @@ class Tienda extends CI_Controller
 	{
 		//Carga la biblioteca paginación
 		$this->load->library('pagination');
-		$limit = 3;
+		$limit = 2;
 		
 		//Obtenemos el total de productos por categoría
 		$totalProd = $this->Producto_model->totalProdCategoria($id);
@@ -126,7 +128,10 @@ class Tienda extends CI_Controller
 				$this->load->view('vista_categoria', $datos, TRUE));
 	}
 	
-	
+	/**
+	 * Carga la vista con los productos destacados.
+	 * @param number $inicio
+	 */
 	public function destacados($inicio=0)
 	{	
 		//Carga la biblioteca paginación

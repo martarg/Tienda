@@ -10,11 +10,6 @@ class Usuario extends CI_Controller
 		$this->load->model('Usuario_model');
 	}
 	
-	function index()
-	{
-		
-	}
-	
 	/**
 	 * Carga la plantilla html (encabezado, menu, cuerpo y pie).
 	 * @param unknown $cuerpo
@@ -253,7 +248,7 @@ class Usuario extends CI_Controller
 		
 		if ($_POST)
 		{
-			//siguientes envíos
+			//siguientes envíos, cogemos los valores del input
 			$data['nombre'] = $this->input->post('nombre');
 			$data['apellidos'] = $this->input->post('apellidos');
 			$data['dni'] = $this->input->post('dni');
@@ -283,6 +278,9 @@ class Usuario extends CI_Controller
 		$this->form_validation->set_rules('usuario', 'usuario', 'trim|required|min_length[3]|max_length[25]|xss_clean');
 		$this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
 		
+
+		
+		
 		//Dar estilo al error.
 		$this->form_validation->set_error_delimiters('<div class="alert-sm alert-danger">', '</div>');
 		
@@ -303,7 +301,6 @@ class Usuario extends CI_Controller
 			$datos['usuario'] = $this->input->post('usuario');
 			$datos['email'] = $this->input->post('email');
 			
-			
 			$this->session->set_userdata('valido', $datos);
 			$this->Usuario_model->modificarUsuario($id, $datos);
 				
@@ -311,6 +308,7 @@ class Usuario extends CI_Controller
 					$this->load->view('exito', '', TRUE));
 		}
 	}
+	
 	
 	/**
 	 * Da de baja un usuario
@@ -323,4 +321,13 @@ class Usuario extends CI_Controller
 		
 		$this->logout();
 	}
+	
+	/*function cambiarPass()
+	{
+		//Primer vez que accedemos cogemos datos de la bd
+		$data = $this->datosUsuario();
+		
+		$this->form_validation->set_rules('password', 'contraseña', 'trim|required|matches[pConfirm]|md5');
+		$this->form_validation->set_rules('pConfirm', 'confirma contraseña', 'trim|required');
+	}*/
 }

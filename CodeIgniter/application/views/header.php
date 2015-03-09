@@ -15,7 +15,7 @@
         <li class=""><a href="<?=base_url()?>">Inicio</a></li>
       </ul>
       <ul class="nav navbar-nav">
-        <li><a href="<?= site_url('carrito')?>">Micarro</a></li>
+        <li><a href="<?= site_url('carrito')?>">Ver carrito <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
       </ul>
       
       <?php if(isset($this->session->userdata['valido']))
@@ -25,11 +25,11 @@
       		<li><a href="<?php echo site_url('usuario/logout')?>">Cerrar sesión</a></li>
       	</ul>
       	<ul class="nav navbar-nav navbar-right">
-        	<li><a href="">Hola, <?php echo $usuario;?></a></li>
+        	<li><a href="<?php echo site_url('usuario/perfil')?>">Hola, <?php echo $usuario;?></a></li>
       	</ul>
       
 		<ul class="nav navbar-nav navbar-right">
-        	<li><a href="<?= site_url('usuario/perfil')?>">Perfil</a></li>
+        	<li><a href="<?= site_url('pedido/verPedidos')?>">Mis pedidos</a></li>
       	</ul>
       	
       	

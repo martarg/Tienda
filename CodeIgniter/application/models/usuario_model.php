@@ -27,6 +27,11 @@ class Usuario_model extends CI_Model
 		}
 	}
 	
+	/**
+	 * Saca los nombres de las provincias
+	 * @param unknown $idprov
+	 * @return string
+	 */
 	function NombreProvincia($idprov)
 	{
 		$sql = "select nombre from provincias where id=$idprov";
@@ -41,6 +46,10 @@ class Usuario_model extends CI_Model
 		}
 	}
 	
+	/**
+	 * Inserta un usuario pasándole los datos del formulario
+	 * @param unknown $campos
+	 */
 	function insertarUsuario($campos)
 	{
 		//sentencia sql que nos inserta en la tabla usuario
@@ -55,6 +64,12 @@ class Usuario_model extends CI_Model
 		$this->db->query($sql);
 	}
 	
+	/**
+	 * Comprueba que el login es válido
+	 * @param unknown $usuario
+	 * @param unknown $password
+	 * @return boolean
+	 */
 	function loginValido($usuario, $password)
 	{
 		$sql = "select * from usuario where usuario = '".$usuario."' AND password = '".$password."' AND borrado != 1";
@@ -71,8 +86,9 @@ class Usuario_model extends CI_Model
 		}
 	}
 	
-	
-	// Read data from database to show data in admin page
+	/**
+	 * Lee los datos de un usuario determinado
+	 */
 	public function informacionUsuario($sess_array) {
 		$condition = "usuario =" . "'" .$sess_array['usuario']. "'";
 		
@@ -91,7 +107,11 @@ class Usuario_model extends CI_Model
 		}
 	}
 	
-	
+	/**
+	 * Modifica los datos de un usuario determinado con los datos del formulario
+	 * @param unknown $id
+	 * @param unknown $datos
+	 */
 	function modificarUsuario($id, $datos)
 	{
 		$campos = '';
@@ -110,9 +130,24 @@ class Usuario_model extends CI_Model
 		
 	} 
 	
+	/**
+	 * Dar de baja a un usuario. (Ocultarlo)
+	 * @param unknown $id
+	 */
 	function borrarUsuario($id)
 	{
 		$sql = "UPDATE usuario SET borrado = 1 WHERE id =".$id;
 		$this->db->query($sql);
+	}
+	
+	/**
+	 * Comprueba el nombre del usuario
+	 * @param unknown $id
+	 */
+	function compruebaNombre($id)
+	{
+		$sql = "SELECT usuario FROM usuario WHERE id=".$id;
+		$rs = $this->db->query($sql);
+		return $rs->result();
 	}
 }

@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 session_start();
 
 class Carrito extends CI_Controller
@@ -16,6 +16,10 @@ class Carrito extends CI_Controller
 		$this->verPlantilla($this->load->view('carro', '', TRUE));
 	}
 	
+	/**
+	 * Carga la plantilla html
+	 * @param unknown $cuerpo
+	 */
 	function verPlantilla($cuerpo)
 	{
 		if(isset($this->session->userdata['valido']))
@@ -41,6 +45,9 @@ class Carrito extends CI_Controller
 		));
 	}
 	
+	/**
+	 * Añade productos al carrito
+	 */
 	function agregarProducto()
 	{
 		//Recogemos el id y la cantidad del producto.
@@ -88,7 +95,10 @@ class Carrito extends CI_Controller
 		redirect('tienda'.$uri, 'refresh');
 	}
 	
-	
+	/**
+	 * Elimina UN producto del carrito
+	 * @param unknown $rowid
+	 */
 	function eliminaProducto($rowid)
 	{
 		//para eliminar un producto en especifico lo que hacemos es conseguir su id
@@ -105,6 +115,9 @@ class Carrito extends CI_Controller
 		redirect('carrito', 'refresh');
 	}
 	
+	/**
+	 * Vacía el carrito
+	 */
 	function eliminaCarrito()
 	{
 		$this->cart->destroy();

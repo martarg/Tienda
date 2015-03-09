@@ -39,6 +39,8 @@
 <a role="button" class="btn btn-primary" href="modificarPerfil">
 	<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modificar perfil
 </a>
+
+<!-- <a role="button" class="btn btn-warning" href="cambiarPass">Cambiar contraseña</a> -->
 	
 <a role="button" class="btn btn-danger" href="borrarUsuario">
 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Dar de baja
